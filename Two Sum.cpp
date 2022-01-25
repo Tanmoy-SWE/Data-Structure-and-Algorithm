@@ -2,6 +2,9 @@
 #include <vector>
 using namespace std;
 
+
+//nlog(n) complexity te korlam
+//Eta recursion diyeo kora jay
 void getSum(int arr[], int size, int n){
     for(int i=0; i<size; i++){
         int start = i;
