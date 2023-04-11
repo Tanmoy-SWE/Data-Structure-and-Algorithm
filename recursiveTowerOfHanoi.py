@@ -2,8 +2,7 @@ recursiveCounter = 0
 def TowerOfHanoiRecur(n, source, destination, helper):
     global recursiveCounter
     recursiveCounter += 1
-    if n == 1:
-        print("Move last from", source, "to", destination)
+    if n == 0:
         return
     TowerOfHanoiRecur(n - 1, source, helper, destination)
     print("Move disk", n, "from", source, "to", destination)
