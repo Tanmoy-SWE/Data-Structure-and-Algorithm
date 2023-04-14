@@ -12,6 +12,12 @@ public class MyBinSTree implements
    */
   public MyBinSTree() {
     // TODO: implement this!
+    //    if node == NULL
+//    return createNode(data)
+//    if (data < node->data)
+//      node->left  = insert(node->left, data);
+//    else if (data > node->data)
+//      node->right = insert(node->right, data);
   }
 
   public int size() {
