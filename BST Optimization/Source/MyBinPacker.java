@@ -2,7 +2,8 @@ package binpacking;
 
 import java.util.List;
 import java.util.function.Supplier;
-
+import java.util.ArrayList;
+import java.util.List;
 public class MyBinPacker implements BinPackerIntf {
 
   /**
@@ -72,9 +73,42 @@ public class MyBinPacker implements BinPackerIntf {
    *          The value at index <code>i</code> is the ID of the bin
    *          used for the item at index <code>i</code>.
    */
+  @Override
   public List<Integer> packWithBestFit(int emptyBinCapacity, List<Integer> itemSizes) {
-    // TODO
-    return List.of();
+    List<Integer> binIds = new ArrayList<>();
+    List<Bin> bins = new ArrayList<>();
+    for (int size : itemSizes) {
+      Bin bestBin = null;
+      for (Bin bin : bins) {
+        if (bin.capacity >= size && (bestBin == null || bin.capacity < bestBin.capacity)) {
+          bestBin = bin;
+        }
+      }
+      if (bestBin == null) {
+        bestBin = new Bin(bins.size(), emptyBinCapacity);
+        bins.add(bestBin);
+      }
+      bestBin.addItem(size);
+      binIds.add(bestBin.id);
+    }
+    return binIds;
+  }
+
+  private static class Bin {
+    private final int id;
+    private int capacity;
+    private final List<Integer> items;
+
+    public Bin(int id, int capacity) {
+      this.id = id;
+      this.capacity = capacity;
+      this.items = new ArrayList<>();
+    }
+
+    public void addItem(int size) {
+      capacity -= size;
+      items.add(size);
+    }
   }
 
   /**
@@ -94,9 +128,9 @@ public class MyBinPacker implements BinPackerIntf {
    * POSTCONDITION: same as {@link #packWithBestFit(int, List<Integer>)}.
    */
   public List<Integer> packWithBestFit_partialMarks(
-      int emptyBinCapacity,
-      List<Integer> itemSizes,
-      Supplier<BinSTreeIntf> binTreeSupplier
+          int emptyBinCapacity,
+          List<Integer> itemSizes,
+          Supplier<BinSTreeIntf> binTreeSupplier
   ) {
     /**
      * Here's some code that uses the binTreeSupplier:
